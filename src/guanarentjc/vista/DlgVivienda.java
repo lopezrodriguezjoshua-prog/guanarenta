@@ -97,7 +97,6 @@ public class DlgVivienda extends javax.swing.JDialog {
         cmbPropietario = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
         cmbEstado = new javax.swing.JComboBox<>();
-        btnActualizarProp = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -121,13 +120,6 @@ public class DlgVivienda extends javax.swing.JDialog {
         jLabel12.setText("Depósito garantía:");
         jLabel13.setText("Propietario:");
         jLabel14.setText("Estado:");
-
-        btnActualizarProp.setText("Actualizar propietarios");
-        btnActualizarProp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarPropActionPerformed(evt);
-            }
-        });
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/guardar.png")));
         btnGuardar.setText("Guardar");
@@ -196,8 +188,6 @@ public class DlgVivienda extends javax.swing.JDialog {
                     .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(btnActualizarProp)
                 .addContainerGap(0, Short.MAX_VALUE)
                 .addComponent(btnGuardar)
                 .addGap(10, 10, 10)
@@ -253,7 +243,6 @@ public class DlgVivienda extends javax.swing.JDialog {
                     .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnActualizarProp)
                     .addComponent(btnGuardar)
                     .addComponent(btnLimpiar)
                     .addComponent(btnCancelar))
@@ -262,10 +251,6 @@ public class DlgVivienda extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnActualizarPropActionPerformed(java.awt.event.ActionEvent evt) {
-        cargarPropietarios();
-    }
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
         guardar();
@@ -291,7 +276,7 @@ public class DlgVivienda extends javax.swing.JDialog {
                 return;
             }
             if (cmbPropietario.getSelectedItem() == null) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar un propietario (use 'Actualizar propietarios')", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un propietario", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             double mtsConstrucc = Double.parseDouble(txtMtsConstrucc.getText().trim());
@@ -350,7 +335,6 @@ public class DlgVivienda extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizarProp;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;

@@ -125,7 +125,7 @@
         <Property name="text" type="java.lang.String" value="Teléfono:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtTelefono">
+    <Component class="javax.swing.JFormattedTextField" name="txtTelefono">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>

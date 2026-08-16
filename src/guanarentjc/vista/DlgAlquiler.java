@@ -5,8 +5,6 @@ import guanarentjc.modelo.Datos;
 import guanarentjc.modelo.Inquilino;
 import guanarentjc.modelo.Vivienda;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,8 +13,6 @@ import javax.swing.JOptionPane;
  * {@code null}, crea uno nuevo.
  */
 public class DlgAlquiler extends javax.swing.JDialog {
-
-    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private final Datos datos = Datos.getInstancia();
     private final Alquileres existente;
@@ -35,7 +31,7 @@ public class DlgAlquiler extends javax.swing.JDialog {
             setTitle("Editar Alquiler");
             txtNumAlquiler.setText(String.valueOf(existente.getNumAlquiler()));
             txtNumAlquiler.setEditable(false);
-            txtFechaContrato.setText(existente.getFechContrato() != null ? existente.getFechContrato().format(FORMATO_FECHA) : "");
+            dtpFechaContrato.setDate(existente.getFechContrato());
             txtCantMeses.setText(String.valueOf(existente.getCantMeses()));
             txtNumAdultos.setText(String.valueOf(existente.getNumAdultos()));
             txtNumNinos.setText(String.valueOf(existente.getNumNinos()));
@@ -75,7 +71,7 @@ public class DlgAlquiler extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         txtNumAlquiler = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtFechaContrato = new javax.swing.JTextField();
+        dtpFechaContrato = new com.github.lgooddatepicker.components.DatePicker();
         jLabel3 = new javax.swing.JLabel();
         txtCantMeses = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -94,7 +90,6 @@ public class DlgAlquiler extends javax.swing.JDialog {
         cmbVivienda = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         cmbEstado = new javax.swing.JComboBox<>();
-        btnActualizarListas = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -104,7 +99,7 @@ public class DlgAlquiler extends javax.swing.JDialog {
         setResizable(false);
 
         jLabel1.setText("Núm. alquiler:");
-        jLabel2.setText("Fecha contrato (dd/MM/yyyy):");
+        jLabel2.setText("Fecha contrato:");
         jLabel3.setText("Cant. meses:");
         jLabel4.setText("Núm. adultos:");
         jLabel5.setText("Núm. niños:");
@@ -114,13 +109,6 @@ public class DlgAlquiler extends javax.swing.JDialog {
         jLabel9.setText("Inquilino:");
         jLabel10.setText("Vivienda:");
         jLabel11.setText("Estado:");
-
-        btnActualizarListas.setText("Actualizar listas");
-        btnActualizarListas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarListasActionPerformed(evt);
-            }
-        });
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/guardar.png")));
         btnGuardar.setText("Guardar");
@@ -176,15 +164,13 @@ public class DlgAlquiler extends javax.swing.JDialog {
                     .addComponent(jLabel10))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFechaContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dtpFechaContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNumAdultos, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDepositoGarantia, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPorcIncremAnual, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbVivienda, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(btnActualizarListas)
                 .addContainerGap(0, Short.MAX_VALUE)
                 .addComponent(btnGuardar)
                 .addGap(10, 10, 10)
@@ -201,7 +187,7 @@ public class DlgAlquiler extends javax.swing.JDialog {
                     .addComponent(jLabel1)
                     .addComponent(txtNumAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(txtFechaContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dtpFechaContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
@@ -232,7 +218,6 @@ public class DlgAlquiler extends javax.swing.JDialog {
                     .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnActualizarListas)
                     .addComponent(btnGuardar)
                     .addComponent(btnLimpiar)
                     .addComponent(btnCancelar))
@@ -241,10 +226,6 @@ public class DlgAlquiler extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnActualizarListasActionPerformed(java.awt.event.ActionEvent evt) {
-        cargarListas();
-    }
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
         guardar();
@@ -266,7 +247,11 @@ public class DlgAlquiler extends javax.swing.JDialog {
     private void guardar() {
         try {
             int numAlquiler = Integer.parseInt(txtNumAlquiler.getText().trim());
-            LocalDate fecha = LocalDate.parse(txtFechaContrato.getText().trim(), FORMATO_FECHA);
+            LocalDate fecha = dtpFechaContrato.getDate();
+            if (fecha == null) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar la fecha de contrato", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             int cantMeses = Integer.parseInt(txtCantMeses.getText().trim());
             int numAdultos = Integer.parseInt(txtNumAdultos.getText().trim());
             int numNinos = Integer.parseInt(txtNumNinos.getText().trim());
@@ -279,7 +264,7 @@ public class DlgAlquiler extends javax.swing.JDialog {
                 return;
             }
             if (cmbInquilino.getSelectedItem() == null || cmbVivienda.getSelectedItem() == null) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar inquilino y vivienda (use 'Actualizar listas')", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Debe seleccionar inquilino y vivienda", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -307,15 +292,13 @@ public class DlgAlquiler extends javax.swing.JDialog {
             dispose();
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Revise que los campos numéricos tengan valores válidos", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (DateTimeParseException ex) {
-            JOptionPane.showMessageDialog(this, "Fecha de contrato inválida, use dd/MM/yyyy", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void limpiarFormulario() {
-        txtFechaContrato.setText("");
+        dtpFechaContrato.setDate(null);
         txtCantMeses.setText("");
         txtNumAdultos.setText("");
         txtNumNinos.setText("");
@@ -326,13 +309,13 @@ public class DlgAlquiler extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizarListas;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JComboBox<String> cmbEstado;
     private javax.swing.JComboBox<Inquilino> cmbInquilino;
     private javax.swing.JComboBox<Vivienda> cmbVivienda;
+    private com.github.lgooddatepicker.components.DatePicker dtpFechaContrato;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -346,7 +329,6 @@ public class DlgAlquiler extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField txtCantMeses;
     private javax.swing.JTextField txtDepositoGarantia;
-    private javax.swing.JTextField txtFechaContrato;
     private javax.swing.JTextField txtNumAdultos;
     private javax.swing.JTextField txtNumAlquiler;
     private javax.swing.JTextField txtNumNinos;

@@ -10,7 +10,8 @@ import javax.swing.table.DefaultTableModel;
 /**
  * Módulo de Gestión de Mensualidades: genera automáticamente los recibos de
  * cobro de un mes/año para todos los alquileres vigentes, y permite
- * mostrarlos/filtrarlos.
+ * mostrarlos/filtrarlos. El mes/año se elige con un {@code DatePicker} (el
+ * día seleccionado no se usa, solo se toma el mes y el año).
  */
 public class DlgMensualidades extends javax.swing.JDialog {
 
@@ -25,10 +26,8 @@ public class DlgMensualidades extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        cmbMesGenerar.setModel(new javax.swing.DefaultComboBoxModel<>(MESES));
-        cmbMesMostrar.setModel(new javax.swing.DefaultComboBoxModel<>(MESES));
-        txtAnioGenerar.setText(String.valueOf(LocalDate.now().getYear()));
-        txtAnioMostrar.setText(String.valueOf(LocalDate.now().getYear()));
+        dtpGenerar.setDate(LocalDate.now());
+        dtpMostrar.setDate(LocalDate.now());
 
         modeloTabla = new DefaultTableModel(new Object[]{"Consecutivo", "Núm. Alquiler", "Fecha Creación",
             "Inquilino", "Mes en cobro", "Año", "Descuento", "Monto a pagar", "Estado"}, 0) {
@@ -53,14 +52,10 @@ public class DlgMensualidades extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        cmbMesGenerar = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
-        txtAnioGenerar = new javax.swing.JTextField();
+        dtpGenerar = new com.github.lgooddatepicker.components.DatePicker();
         btnGenerar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        cmbMesMostrar = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
-        txtAnioMostrar = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        dtpMostrar = new com.github.lgooddatepicker.components.DatePicker();
         btnMostrar = new javax.swing.JButton();
         chkFiltrarInquilino = new javax.swing.JCheckBox();
         chkFiltrarMes = new javax.swing.JCheckBox();
@@ -73,8 +68,7 @@ public class DlgMensualidades extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión de Mensualidades");
 
-        jLabel1.setText("Mes:");
-        jLabel2.setText("Año:");
+        jLabel1.setText("Generar del mes:");
 
         btnGenerar.setText("Generar");
         btnGenerar.addActionListener(new java.awt.event.ActionListener() {
@@ -83,8 +77,7 @@ public class DlgMensualidades extends javax.swing.JDialog {
             }
         });
 
-        jLabel3.setText("Mes:");
-        jLabel4.setText("Año:");
+        jLabel2.setText("Mostrar del mes:");
 
         btnMostrar.setText("Mostrar");
         btnMostrar.addActionListener(new java.awt.event.ActionListener() {
@@ -94,7 +87,9 @@ public class DlgMensualidades extends javax.swing.JDialog {
         });
 
         chkFiltrarInquilino.setText("Inquilino");
+
         chkFiltrarMes.setText("Mes");
+
         chkFiltrarAnio.setText("Año");
 
         btnFiltrar.setText("Filtrar");
@@ -113,56 +108,51 @@ public class DlgMensualidades extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbMesGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAnioGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbMesMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAnioMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
-                .addComponent(btnGenerar)
-                .addGap(10, 10, 10)
-                .addComponent(btnMostrar)
-                .addContainerGap(15, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(chkFiltrarInquilino)
-                .addGap(8, 8, 8)
-                .addComponent(chkFiltrarMes)
-                .addGap(8, 8, 8)
-                .addComponent(chkFiltrarAnio)
-                .addGap(8, 8, 8)
-                .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(btnFiltrar)
-                .addContainerGap(15, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 900, Short.MAX_VALUE)
-                .addGap(15, 15, 15))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 900, Short.MAX_VALUE)
+                        .addGap(15, 15, 15))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(dtpGenerar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(dtpMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(30, 30, 30)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnGenerar)
+                                    .addComponent(btnMostrar)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(chkFiltrarInquilino)
+                                .addGap(8, 8, 8)
+                                .addComponent(chkFiltrarMes)
+                                .addGap(8, 8, 8)
+                                .addComponent(chkFiltrarAnio)
+                                .addGap(8, 8, 8)
+                                .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8)
+                                .addComponent(btnFiltrar)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(cmbMesGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtAnioGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGenerar))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(dtpGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnGenerar)))
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(cmbMesMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtAnioMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMostrar))
-                .addGap(12, 12, 12)
+                    .addComponent(jLabel2)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(dtpMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnMostrar)))
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chkFiltrarInquilino)
                     .addComponent(chkFiltrarMes)
@@ -190,30 +180,30 @@ public class DlgMensualidades extends javax.swing.JDialog {
     }
 
     private void generar() {
+        LocalDate fecha = dtpGenerar.getDate();
+        if (fecha == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar el mes a generar", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         try {
-            int mes = cmbMesGenerar.getSelectedIndex() + 1;
-            int anio = Integer.parseInt(txtAnioGenerar.getText().trim());
-            int cantidad = datos.generarMensualidades(mes, anio);
+            int cantidad = datos.generarMensualidades(fecha.getMonthValue(), fecha.getYear());
             refrescarTabla(datos.getMensualidades());
             JOptionPane.showMessageDialog(this, "Se generaron " + cantidad + " recibos de mensualidad");
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "El año debe ser numérico", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (IllegalArgumentException | IllegalStateException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void mostrarPorMesAnio() {
-        try {
-            int mes = cmbMesMostrar.getSelectedIndex() + 1;
-            int anio = Integer.parseInt(txtAnioMostrar.getText().trim());
-            java.util.List<Mensualidades> lista = datos.getMensualidades().stream()
-                    .filter(m -> m.getMesCobro() == mes && m.getAnioActual() == anio)
-                    .toList();
-            refrescarTabla(lista);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "El año debe ser numérico", "Error", JOptionPane.ERROR_MESSAGE);
+        LocalDate fecha = dtpMostrar.getDate();
+        if (fecha == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar el mes a mostrar", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        java.util.List<Mensualidades> lista = datos.getMensualidades().stream()
+                .filter(m -> m.getMesCobro() == fecha.getMonthValue() && m.getAnioActual() == fecha.getYear())
+                .toList();
+        refrescarTabla(lista);
     }
 
     private void aplicarFiltro() {
@@ -256,16 +246,12 @@ public class DlgMensualidades extends javax.swing.JDialog {
     private javax.swing.JCheckBox chkFiltrarAnio;
     private javax.swing.JCheckBox chkFiltrarInquilino;
     private javax.swing.JCheckBox chkFiltrarMes;
-    private javax.swing.JComboBox<String> cmbMesGenerar;
-    private javax.swing.JComboBox<String> cmbMesMostrar;
+    private com.github.lgooddatepicker.components.DatePicker dtpGenerar;
+    private com.github.lgooddatepicker.components.DatePicker dtpMostrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabla;
-    private javax.swing.JTextField txtAnioGenerar;
-    private javax.swing.JTextField txtAnioMostrar;
     private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 }

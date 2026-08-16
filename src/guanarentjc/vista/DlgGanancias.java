@@ -48,7 +48,7 @@ public class DlgGanancias extends javax.swing.JDialog {
         rbAnual = new javax.swing.JRadioButton();
         rbMensual = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
-        cmbMes = new javax.swing.JComboBox<>();
+        cmbMes = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         txtAnio = new javax.swing.JTextField();
         btnConsultar = new javax.swing.JButton();
@@ -59,8 +59,11 @@ public class DlgGanancias extends javax.swing.JDialog {
         setResizable(false);
 
         rbAnual.setText("Ganancias de todo un año");
+
         rbMensual.setText("Ganancias de un mes específico");
+
         jLabel1.setText("Mes:");
+
         jLabel2.setText("Año:");
 
         btnConsultar.setText("Consultar ganancias");
@@ -91,7 +94,7 @@ public class DlgGanancias extends javax.swing.JDialog {
                             .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnConsultar))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,7 +115,7 @@ public class DlgGanancias extends javax.swing.JDialog {
                 .addComponent(btnConsultar)
                 .addGap(12, 12, 12)
                 .addComponent(lblResultado)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         pack();
@@ -141,7 +144,7 @@ public class DlgGanancias extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultar;
-    private javax.swing.JComboBox<String> cmbMes;
+    private javax.swing.JComboBox cmbMes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblResultado;
